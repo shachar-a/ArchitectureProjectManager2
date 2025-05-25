@@ -1,0 +1,12 @@
+# File: requirements.txt
+"""
+Requirements file for the Contact Management System.
+All dependencies are part of Python's standard library.
+"""
+
+# No external dependencies required
+# This application uses only Python standard library modules:
+# - tkinter (GUI framework)
+# - sqlite3 (database)
+# - typing (type hints)
+# - os, sys (system operations)
