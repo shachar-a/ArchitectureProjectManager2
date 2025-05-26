@@ -125,6 +125,9 @@ class AppController:
                 # Replace the contact controller's main view with our frame
                 self.contact_controller.main_view.root.withdraw()  # Hide original window
                 
+                # Update the contact controller to use the main app window for forms
+                self.contact_controller.main_view.root = self.root
+                
                 # Recreate the contact list view in our frame
                 from views import ContactListView
                 self.contact_controller.list_view = ContactListView(
@@ -143,6 +146,9 @@ class AppController:
                 contact_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
                 contact_frame.columnconfigure(0, weight=1)
                 contact_frame.rowconfigure(0, weight=1)
+                
+                # Update the contact controller to use the main app window for forms
+                self.contact_controller.main_view.root = self.root
                 
                 from views import ContactListView
                 self.contact_controller.list_view = ContactListView(

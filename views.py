@@ -84,9 +84,9 @@ class ContactFormView:
             row += 1
         
         # Required fields note
-        ttk.Label(main_frame, text="* Required fields", 
+        ttk.Label(main_frame, text="שדה חובה *", 
                  font=("TkDefaultFont", 8)).grid(
-            row=row, column=0, columnspan=2, sticky=tk.W, pady=(10, 5)
+            row=row, column=1, columnspan=2, sticky=tk.W, pady=(10, 5)
         )
         
         # Buttons frame
@@ -337,6 +337,14 @@ class MainView:
         # Configure style
         style = ttk.Style()
         style.theme_use('clam')  # Use a modern theme
+        
+        # Handle window close event properly
+        self.root.protocol("WM_DELETE_WINDOW", self._on_closing)
+    
+    def _on_closing(self) -> None:
+        """Handle window close event."""
+        self.root.quit()  # Exit the mainloop
+        self.root.destroy()  # Destroy the window
     
     def run(self) -> None:
         """Start the main event loop."""

@@ -67,7 +67,7 @@ class ProjectFormView:
             
             # Label
             ttk.Label(main_frame, text=label).grid(
-                row=row, column=1, sticky=tk.W, pady=5
+                row=row, column=2, sticky=tk.W, pady=5
             )
             
             # Entry widget based on field type
@@ -76,33 +76,33 @@ class ProjectFormView:
                 var = tk.StringVar(value='לא')
                 entry = ttk.Combobox(main_frame, textvariable=var, 
                                    values=['כן', 'לא'], state='readonly', width=27)
-                entry.grid(row=row, column=0, sticky=(tk.W, tk.E), pady=5)
+                entry.grid(row=row, column=1, sticky=(tk.W, tk.E), pady=5)
             elif field == 'state':
                 # Combobox for state selection
                 var = tk.StringVar()
                 entry = ttk.Combobox(main_frame, textvariable=var, 
                                    values=ProjectSchema.STATE_OPTIONS, width=27)
-                entry.grid(row=row, column=0, sticky=(tk.W, tk.E), pady=5)
+                entry.grid(row=row, column=1, sticky=(tk.W, tk.E), pady=5)
             elif field in ['start_date', 'end_date']:
                 # Entry with date format hint
                 entry = ttk.Entry(main_frame, width=30)
-                entry.grid(row=row, column=0, sticky=(tk.W, tk.E), pady=5)
+                entry.grid(row=row, column=1, sticky=(tk.W, tk.E), pady=5)
                 # Add date format hint
                 hint_label = ttk.Label(main_frame, text="(YYYY-MM-DD)", 
                                      font=("TkDefaultFont", 8), foreground="gray")
-                hint_label.grid(row=row, column=2, sticky=tk.W, padx=(5, 0))
+                hint_label.grid(row=row, column=0, sticky=tk.W, padx=(5, 0))
             else:
                 # Regular entry
                 entry = ttk.Entry(main_frame, width=30)
-                entry.grid(row=row, column=0, sticky=(tk.W, tk.E), pady=5)
+                entry.grid(row=row, column=1, sticky=(tk.W, tk.E), pady=5)
             
             self.entries[field] = entry
             row += 1
         
         # Required fields note
-        ttk.Label(main_frame, text="* Required fields", 
+        ttk.Label(main_frame, text="שדה חובה *", 
                  font=("TkDefaultFont", 8)).grid(
-            row=row, column=0, columnspan=3, sticky=tk.W, pady=(10, 5)
+            row=row, column=2, columnspan=3, sticky=tk.W, pady=(10, 5)
         )
         
         # Buttons frame
