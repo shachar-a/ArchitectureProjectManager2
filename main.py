@@ -1,7 +1,7 @@
 # File: main.py
 """
-Main entry point for the Contact Management System.
-This file initializes and runs the application.
+Main entry point for the Architecture Project Manager.
+This file initializes and runs the unified application with both Contact and Project management.
 """
 
 import sys
@@ -11,14 +11,14 @@ import os
 current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, current_dir)
 
-from controllers import ContactController
+from app_controller import AppController
 
 
 def main():
-    """Main function to start the Contact Management System."""
+    """Main function to start the Architecture Project Manager."""
     try:
-        # Create and run the application
-        app = ContactController()
+        # Create and run the unified application
+        app = AppController()
         app.run()
         
     except KeyboardInterrupt:

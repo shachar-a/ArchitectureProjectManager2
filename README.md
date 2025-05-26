@@ -1,48 +1,52 @@
-# File: README.md
-"""
-# Contact Management System
+# Architecture Project Manager
 
-A desktop contact management application built with Python using the Model-View-Controller (MVC) architecture pattern.
+A desktop application built with Python, Tkinter, and SQLite for managing both contacts and projects using the Model-View-Controller (MVC) architecture pattern.
 
 ## Features
 
+### Contact Management
 - **CRUD Operations**: Create, Read, Update, and Delete contacts
-- **Persistent Storage**: SQLite database for local data storage
-- **User-Friendly GUI**: Clean Tkinter interface with form validation
-- **Modular Architecture**: Clean separation of concerns using MVC pattern
+- **Contact Information**: Store name, phone, email, and address
 - **Data Validation**: Input validation with error messages
-- **Responsive Design**: Resizable windows with proper layout management
+- **Hebrew Language Support**: GUI labels in Hebrew
+
+### Project Management
+- **Project CRUD**: Create, Read, Update, and Delete projects
+- **Project Details**: Customer name, location, start/end dates, status, and state
+- **Project States**: Planning, In Progress, Completed, On Hold, Cancelled
+- **Active Status Tracking**: Boolean flag for project activity
+
+### Unified Interface
+- **Navigation**: Switch between Contact and Project management views
+- **Consistent UI**: Matching visual style across both modules
+- **Modular Design**: Completely separate logic for contacts and projects
+- **Persistent Storage**: SQLite database for local data storage
 
 ## Architecture
 
 The application follows the MVC design pattern with clean modular separation:
 
-### Models (`models.py`)
-- `ContactModel`: Handles all database operations and data persistence
-- SQLite database with ACID compliance
-- Centralized data validation
+### Contact Module
+- **Model** (`models.py`): Contact database operations and data persistence
+- **View** (`views.py`): Contact GUI components and layouts
+- **Controller** (`controllers.py`): Contact business logic and event handling
+- **Schema** (`schema.py`): Contact database schema and validation rules
 
-### Views (`views.py`)
-- `MainView`: Main application window
-- `ContactListView`: Table view for displaying contacts
-- `ContactFormView`: Form dialog for creating/editing contacts
-- Clean Tkinter GUI with modern styling
+### Project Module
+- **Model** (`project_model.py`): Project database operations and data persistence
+- **View** (`project_view.py`): Project GUI components and layouts
+- **Controller** (`project_controller.py`): Project business logic and event handling
+- **Schema** (`project_schema.py`): Project database schema and validation rules
 
-### Controllers (`controllers.py`)
-- `ContactController`: Coordinates between models and views
-- Handles business logic and user interactions
-- Event-driven architecture
-
-### Schema (`schema.py`)
-- `ContactSchema`: Centralized schema definitions
-- Database table structure
-- Field validation rules
-- GUI field configurations
+### Main Application
+- **App Controller** (`app_controller.py`): Main navigation and view management
+- **Main Entry** (`main.py`): Application entry point
 
 ## Database Schema
 
-The application uses SQLite with the following table structure:
+The application uses SQLite with the following table structures:
 
+### Contacts Table
 ```sql
 CREATE TABLE contacts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -51,6 +55,19 @@ CREATE TABLE contacts (
     phone TEXT,
     email TEXT,
     address TEXT
+);
+```
+
+### Projects Table
+```sql
+CREATE TABLE projects (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    customer_name TEXT NOT NULL,
+    location TEXT,
+    start_date TEXT,
+    end_date TEXT,
+    is_active BOOLEAN,
+    state TEXT
 );
 ```
 
@@ -64,10 +81,9 @@ CREATE TABLE contacts (
 
 1. **Download/Clone the application files**:
    - `main.py`
-   - `controllers.py`
-   - `views.py`
-   - `models.py`
-   - `schema.py`
+   - `app_controller.py`
+   - Contact module: `controllers.py`, `views.py`, `models.py`, `schema.py`
+   - Project module: `project_controller.py`, `project_view.py`, `project_model.py`, `project_schema.py`
 
 2. **Ensure Python has tkinter support**:
    ```bash
@@ -87,59 +103,74 @@ python main.py
 ```
 
 ### Main Interface
-- View all contacts in a sortable table
-- Use buttons to Add, Edit, Delete, or Refresh contacts
-- Double-click a contact row to edit
-- Status bar shows current operation status
+- **Navigation Bar**: Switch between "אנשי קשר (Contacts)" and "פרויקטים (Projects)"
+- **Active View Indication**: Current view button is disabled
+- **Unified Window**: Single window with navigation between modules
 
-### Adding Contacts
-1. Click "Add Contact" button
-2. Fill in the required fields (First Name, Last Name)
-3. Optionally add Phone, Email, and Address
-4. Click "Save" to create the contact
+### Contact Management
+1. **Adding Contacts**: Click "Add Contact" button and fill in the form
+2. **Editing Contacts**: Double-click on a contact or select and click "Edit Contact"
+3. **Deleting Contacts**: Select a contact and click "Delete Contact"
+4. **Required Fields**: First Name and Last Name are mandatory
 
-### Editing Contacts
-1. Select a contact from the list
-2. Click "Edit Contact" or double-click the row
-3. Modify the information in the form
-4. Click "Save" to update the contact
-
-### Deleting Contacts
-1. Select a contact from the list
-2. Click "Delete Contact"
-3. Confirm the deletion in the dialog box
+### Project Management
+1. **Adding Projects**: Click "Add Project" button and fill in the form
+2. **Editing Projects**: Double-click on a project or select and click "Edit Project"
+3. **Deleting Projects**: Select a project and click "Delete Project"
+4. **Required Fields**: Customer Name is mandatory
+5. **Date Format**: Use YYYY-MM-DD format for start and end dates
+6. **Project States**: Select from predefined states (תכנון, בביצוע, הושלם, מושהה, בוטל)
+7. **Active Status**: Choose כן (Yes) or לא (No) for project activity
 
 ### Data Validation
-- First Name and Last Name are required fields
+- Required fields are marked with asterisks (*)
 - Email addresses must contain '@' symbol
+- Date fields must follow YYYY-MM-DD format
 - Form validation occurs on save with clear error messages
 
 ## File Structure
 
 ```
-contact_management_system/
-├── main.py              # Application entry point
-├── controllers.py       # Controller layer (business logic)
-├── views.py            # View layer (GUI components)
-├── models.py           # Model layer (database operations)
-├── schema.py           # Centralized schema definitions
-├── requirements.txt    # Dependencies (none - uses stdlib)
-├── README.md          # This documentation
-└── contacts.db        # SQLite database (created automatically)
+architecture_project_manager/
+├── main.py                  # Application entry point
+├── app_controller.py        # Main navigation controller
+│
+├── Contact Module:
+│   ├── controllers.py       # Contact controller (business logic)
+│   ├── views.py            # Contact views (GUI components)
+│   ├── models.py           # Contact model (database operations)
+│   └── schema.py           # Contact schema definitions
+│
+├── Project Module:
+│   ├── project_controller.py # Project controller (business logic)
+│   ├── project_view.py      # Project views (GUI components)
+│   ├── project_model.py     # Project model (database operations)
+│   └── project_schema.py    # Project schema definitions
+│
+├── requirements.txt         # Dependencies (none - uses stdlib)
+├── README.md               # This documentation
+└── contacts.db            # SQLite database (created automatically)
 ```
 
 ## Technical Details
 
 ### Design Patterns Used
-- **Model-View-Controller (MVC)**: Clean separation of concerns
+- **Model-View-Controller (MVC)**: Clean separation of concerns for both modules
 - **Observer Pattern**: Event-driven GUI interactions
 - **Factory Pattern**: Centralized schema and validation
+- **Modular Architecture**: Complete separation between contact and project logic
 
 ### Key Technologies
 - **Python 3.6+**: Core programming language
 - **Tkinter**: GUI framework (included with Python)
 - **SQLite3**: Embedded database (included with Python)
 - **typing**: Type hints for better code documentation
+
+### Navigation Implementation
+- **Single Window**: One main window with dynamic content switching
+- **View Management**: Controllers are created/destroyed as needed
+- **Form Isolation**: Forms from one module are closed when switching views
+- **State Preservation**: Each module maintains its own state independently
 
 ### Best Practices Implemented
 - **PEP 8**: Python coding standards compliance
@@ -148,6 +179,7 @@ contact_management_system/
 - **Error handling**: Robust exception management
 - **Input validation**: Data integrity and security
 - **Modular design**: Easy maintenance and extensibility
+- **Separation of concerns**: No mixing of contact and project logic
 
 ## Troubleshooting
 
@@ -165,6 +197,10 @@ contact_management_system/
    - Check if running in a headless environment
    - Tkinter requires a display server (X11, Wayland, etc.)
 
+4. **Navigation issues**:
+   - If views don't switch properly, restart the application
+   - Check console for any error messages
+
 ### Debug Mode
 To run with additional debugging information:
 ```bash
@@ -173,11 +209,27 @@ python -u main.py
 
 ## Development
 
-### Extending the Application
+### Adding New Modules
+To add a new management module (e.g., Tasks):
 
-To add new fields to contacts:
+1. **Create module files**:
+   - `task_schema.py`: Define database schema and validation
+   - `task_model.py`: Implement database operations
+   - `task_view.py`: Create GUI components
+   - `task_controller.py`: Handle business logic
 
-1. **Update schema.py**:
+2. **Update app_controller.py**:
+   - Add navigation button
+   - Implement show_tasks() method
+   - Import task controller
+
+3. **Follow existing patterns**: Use contact/project modules as templates
+
+### Extending Existing Modules
+
+To add new fields to contacts or projects:
+
+1. **Update respective schema file**:
    ```python
    COLUMNS = {
        # ... existing columns ...
@@ -192,24 +244,13 @@ To add new fields to contacts:
    DISPLAY_ORDER = [..., 'new_field']
    ```
 
-2. **Database will auto-update** on next run (SQLite handles missing columns gracefully)
-
+2. **Database will auto-update** on next run
 3. **GUI forms automatically adapt** to new schema definitions
 
-### Adding Validation Rules
-Update the `validate_contact_data` method in `schema.py`:
-```python
-@classmethod
-def validate_contact_data(cls, data):
-    errors = []
-    # Add custom validation logic
-    return errors
-```
-
 ### Customizing the GUI
-Modify styling in `views.py`:
+Modify styling in view files:
 ```python
-# In MainView.__init__()
+# In view initialization
 style = ttk.Style()
 style.configure('Custom.TButton', foreground='blue')
 ```
@@ -217,37 +258,44 @@ style.configure('Custom.TButton', foreground='blue')
 ## Testing
 
 ### Manual Testing Checklist
+
+#### Contact Module
 - [ ] Create new contact with all fields
 - [ ] Create contact with only required fields
 - [ ] Edit existing contact
 - [ ] Delete contact with confirmation
 - [ ] Form validation (empty required fields)
 - [ ] Email validation
+
+#### Project Module
+- [ ] Create new project with all fields
+- [ ] Create project with only required fields
+- [ ] Edit existing project
+- [ ] Delete project with confirmation
+- [ ] Date format validation
+- [ ] State selection functionality
+- [ ] Active status toggle
+
+#### Navigation
+- [ ] Switch from contacts to projects
+- [ ] Switch from projects to contacts
+- [ ] Form closure when switching views
+- [ ] Button state updates
+- [ ] Data persistence across view switches
+
+#### General
 - [ ] Database persistence across restarts
 - [ ] GUI responsiveness and resizing
-
-### Unit Testing Framework
-For automated testing, consider adding:
-```python
-import unittest
-from models import ContactModel
-
-class TestContactModel(unittest.TestCase):
-    def setUp(self):
-        self.model = ContactModel(':memory:')  # In-memory DB for testing
-    
-    def test_create_contact(self):
-        # Test implementation
-        pass
-```
+- [ ] Error handling and user feedback
 
 ## Contributing
 
 1. Follow PEP 8 coding standards
 2. Add type hints to all functions
 3. Include docstrings for all classes and methods
-4. Test changes manually before submitting
-5. Update documentation for new features
+4. Maintain separation between contact and project logic
+5. Test changes manually before submitting
+6. Update documentation for new features
 
 ## License
 
@@ -262,8 +310,8 @@ For issues or questions:
 
 ---
 
-**Version**: 1.0  
+**Version**: 3.1  
 **Python Compatibility**: 3.6+  
 **GUI Framework**: Tkinter  
-**Database**: SQLite3
-"""
+**Database**: SQLite3  
+**Architecture**: MVC with Navigation
